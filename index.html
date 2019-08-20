@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html>
 <title>Phuong Nguyen's site</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<! Add library for Flip clock >
+	<link rel="stylesheet" href="./lib/flipClock/flipclock.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="./lib/flipClock/flipclock.js"></script>
+</head>
+
 <style>
 body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
@@ -15,34 +23,54 @@ body, html {height: 100%}
   background-size: cover;
 }
 </style>
-<script> 
-var deadline = new Date("Nov 22, 2019 0:0:0").getTime(); 
-var x = setInterval(function() { 
-	var now = new Date().getTime(); 
-	var t = deadline - now; 
-	var days = Math.floor(t / (1000 * 60 * 60 * 24)); 
-	var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60)); 
-	var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60)); 
-	var seconds = Math.floor((t % (1000 * 60)) / 1000); 
-	document.getElementById("countdownTime").innerHTML = days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds";
-	if (t < 0) { 
-		clearInterval(x); 
-		document.getElementById("countdownTime").innerHTML = "";
-	} 
-}, 1000); 
-</script> 
+
+<script type="text/javascript">
+	var clock;
+	$(document).ready(function() {
+		// Set dates.
+		var futureDate  = new Date("November 22, 2019 00:00");
+		var currentDate = new Date();
+
+		// Calculate the difference in seconds between the future and current date
+		var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+
+		// Calculate day difference and apply class to .clock for extra digit styling.
+		function dayDiff(first, second) {
+			return (second-first)/(1000*60*60*24);
+		}
+
+		if (dayDiff(currentDate, futureDate) < 100) {
+			$('.clock').addClass('twoDayDigits');
+		} else {
+			$('.clock').addClass('threeDayDigits');
+		}
+
+		if(diff < 0) {
+			diff = 0;
+		}
+
+		// Instantiate a coutdown FlipClock
+		clock = $('.clock').FlipClock(diff, {
+			clockFace: 'DailyCounter',
+			countdown: true
+		});
+	});
+</script>
+
 <body>
-
-<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-  <div class="w3-display-middle">
-    <h1 class="w3-jumbo w3-animate-top">MY BUBU IS COMING</h1>
-    <hr class="w3-border-grey" style="margin:auto;width:40%">
-    <p class="w3-large w3-center" id="countdownTime">Remaining time</p>
-  </div>
-  <div class="w3-display-bottomleft w3-padding-large">
-    Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>
-  </div>
-</div>
-
+	<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+	  <div class="w3-display-middle">
+		<h1 class="w3-jumbo w3-animate-top">MY BUBU IS COMING</h1>
+		<hr class="w3-border-grey" style="margin:auto;width:40%">
+		<br>
+		<! Insert the clock here >
+		<div class="clock" style="margin:2em;"></div>
+		
+	  </div>
+	  <div class="w3-display-bottomleft w3-padding-large">
+		Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>
+	  </div>
+	</div>
 </body>
+
 </html>
