@@ -15,13 +15,29 @@ body, html {height: 100%}
   background-size: cover;
 }
 </style>
+<script> 
+var deadline = new Date("Nov 22, 2019 0:0:0").getTime(); 
+var x = setInterval(function() { 
+	var now = new Date().getTime(); 
+	var t = deadline - now; 
+	var days = Math.floor(t / (1000 * 60 * 60 * 24)); 
+	var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60)); 
+	var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60)); 
+	var seconds = Math.floor((t % (1000 * 60)) / 1000); 
+	document.getElementById("countdownTime").innerHTML = days + " days " + hours + " hours " + minutes + " minutes " + seconds + " seconds";
+	if (t < 0) { 
+		clearInterval(x); 
+		document.getElementById("countdownTime").innerHTML = "";
+	} 
+}, 1000); 
+</script> 
 <body>
 
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
   <div class="w3-display-middle">
-    <h1 class="w3-jumbo w3-animate-top">COMING SOON</h1>
+    <h1 class="w3-jumbo w3-animate-top">MY "BUBU" IS COMING</h1>
     <hr class="w3-border-grey" style="margin:auto;width:40%">
-    <p class="w3-large w3-center">This website is under development.</p>
+    <p class="w3-large w3-center" id="countdownTime">Remaining time</p>
   </div>
   <div class="w3-display-bottomleft w3-padding-large">
     Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>
